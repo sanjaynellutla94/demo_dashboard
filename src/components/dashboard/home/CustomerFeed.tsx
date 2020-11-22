@@ -31,7 +31,6 @@ const Children = (props: { feeds: Array<any> }) => {
           ></Description>
         );
       })}
-      ;
     </div>
   );
 };
