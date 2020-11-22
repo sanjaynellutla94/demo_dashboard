@@ -3,7 +3,8 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 import App from "./views/App";
-import store, { history } from "./store/store";
+import store from "./store/store";
+import { history } from "./routes/router";
 import reportWebVitals from "./reportWebVitals";
 import "./styles/index.scss";
 

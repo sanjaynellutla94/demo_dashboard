@@ -1,5 +1,9 @@
+import { createBrowserHistory } from "history";
+
 import routerApp from "./route-app";
 import routerDashboard from "./route-dashboard";
+
+export const history = createBrowserHistory();
 
 export interface DemoRoute {
   name: string;
