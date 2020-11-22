@@ -35,7 +35,7 @@ export default function HomeHeader() {
           </Nav>
           <Form className="pt-15" inline>
             <InputGroup>
-              <FormControl size="sm" type="text" placeholder="Search" />
+              <FormControl type="text" placeholder="Search" />
               <InputGroup.Append>
                 <InputGroup.Text id="basic-addon1">
                   <DemoIcon icon="search"></DemoIcon>
