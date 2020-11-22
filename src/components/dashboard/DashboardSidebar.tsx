@@ -65,31 +65,34 @@ const MenuItem = (props: {
 };
 
 export default function DashboardSidebar() {
-  const hovered: boolean = useSelector((data: any) => {
-    const { sidebarHovered } = data.dashboard.meta;
-    return sidebarHovered;
+  // Declarations
+  const state: {
+    menuItems: Array<MenuType>;
+    hovered: boolean;
+  } = useSelector((store: any) => {
+    const { sidebarHovered, menuItems } = store.dashboard.meta;
+    return {
+      hovered: sidebarHovered,
+      menuItems,
+    };
   });
-  const menuItems: Array<MenuType> = useSelector((data: any) => {
-    const { menuItems } = data.dashboard.meta;
-    return menuItems;
-  });
-  // const { children } = props;
+  // Render Logic
   return (
     <Container fluid className="text-light mx-0 px-0">
       <MenuItem
         className="bg-white text-primary py-3 px-2"
-        hovered={hovered}
+        hovered={state.hovered}
         icon="medium"
         title="Medium"
         route="asdasd"
       ></MenuItem>
-      {menuItems.map((item: MenuType) => {
+      {state.menuItems.map((item: MenuType) => {
         const { key, title, icon, route } = item;
         return (
           <MenuItem
             className="bg-primary text-light py-3 px-2"
             key={key}
-            hovered={hovered}
+            hovered={state.hovered}
             title={title}
             icon={icon}
             route={route}
