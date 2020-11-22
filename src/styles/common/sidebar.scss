@@ -1,0 +1,29 @@
+.Sidebar-left {
+  bottom: 0px;
+  left: 0px;
+  position: fixed;
+  top: 0px;
+  overflow-y: auto;
+  width: 250px;
+}
+.Sidebar-right {
+  bottom: 0px;
+  right: 0px;
+  position: fixed;
+  overflow-y: auto;
+  top: 0px;
+  width: 250px;
+}
+
+.Overlay {
+  position: fixed; /* Sit on top of the page content */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
+}
