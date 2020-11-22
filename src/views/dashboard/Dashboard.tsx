@@ -1,11 +1,14 @@
-import React, { CSSProperties, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Switch, Route, RouteChildrenProps } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 // import DemoLayout from '../../components/common/DemoLayout';
 import DashboardSidebar from "../../components/dashboard/DashboardSidebar";
 import { DASHBOARD_ROUTES, DemoRoute } from "../../routes/router";
 
-import { DemoLayout } from "../../components/common/demo-components";
+import {
+  DemoLayout,
+  DemoLoader,
+} from "../../components/common/demo-components";
 import {
   toggleSidebarAction,
   getDashboardMetadataAction,
@@ -14,10 +17,10 @@ import {
 const SIDEBAR_WIDTH = "60px";
 const SIDEBAR_HOVERED_WIDTH = "200px";
 
-const getRoutes = (routes: Array<DemoRoute>) => {
-  return routes.map((route, key) => {
+const DashboarRoutes = (props: { routes: Array<DemoRoute> }) => {
+  const { routes } = props;
+  const routeTemplates = routes.map((route: DemoRoute, key) => {
     return (
-      // exact
       <Route
         path={route.path}
         key={key}
@@ -28,30 +31,42 @@ const getRoutes = (routes: Array<DemoRoute>) => {
       ></Route>
     );
   });
+  return <React.Fragment>{routeTemplates}</React.Fragment>;
 };
 
 export default function Dashboard() {
-  const isLoadingData: boolean = useSelector((data: any) => {
-    const { isLoading } = data.dashboard.meta;
-    return isLoading;
-  });
-  const hovered: boolean = useSelector((data: any) => {
-    const { sidebarHovered } = data.dashboard.meta;
-    return sidebarHovered;
+  // declarations
+  const state: {
+    isLoadingData: boolean;
+    hovered: boolean;
+  } = useSelector((data: any) => {
+    const { isLoading, sidebarHovered } = data.dashboard.meta;
+    return {
+      isLoadingData: isLoading,
+      hovered: sidebarHovered,
+    };
   });
   const dispatch = useDispatch();
   const getMetadata = () => {
     dispatch(getDashboardMetadataAction());
   };
+
+  // Side effects
   useEffect(() => {
     getMetadata();
     return () => {};
   }, []); //eslint-disable-line
-  if (isLoadingData) {
-    return <div>Loading....</div>;
+
+  // Rendering Logic
+  if (state.isLoadingData) {
+    return <DemoLoader />;
   } else {
-    const contentStyles: CSSProperties = {
-      marginLeft: SIDEBAR_WIDTH,
+    const META = {
+      SIDEBAR_WIDTH: state.hovered ? SIDEBAR_HOVERED_WIDTH : SIDEBAR_WIDTH,
+      SIDEBAR_CLASSNAME: "bg-primary",
+      CONTENT_STYLES: {
+        marginLeft: SIDEBAR_WIDTH,
+      },
     };
     const onMouseOver: Function = () => {
       dispatch(toggleSidebarAction());
@@ -59,7 +74,6 @@ export default function Dashboard() {
     const onMouseLeave: Function = () => {
       dispatch(toggleSidebarAction());
     };
-    const sidebarWidth = hovered ? SIDEBAR_HOVERED_WIDTH : SIDEBAR_WIDTH;
     return (
       <div>
         {/* overlay */}
@@ -67,13 +81,15 @@ export default function Dashboard() {
           <DemoLayout.Sidebar
             onMouseOver={onMouseOver}
             onMouseLeave={onMouseLeave}
-            className="bg-primary"
-            width={sidebarWidth}
+            className={META.SIDEBAR_CLASSNAME}
+            width={META.SIDEBAR_WIDTH}
           >
             <DashboardSidebar></DashboardSidebar>
           </DemoLayout.Sidebar>
-          <DemoLayout.Content style={contentStyles}>
-            <Switch>{getRoutes(DASHBOARD_ROUTES)}</Switch>
+          <DemoLayout.Content style={META.CONTENT_STYLES}>
+            <Switch>
+              <DashboarRoutes routes={DASHBOARD_ROUTES}></DashboarRoutes>
+            </Switch>
           </DemoLayout.Content>
         </DemoLayout>
       </div>
