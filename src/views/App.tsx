@@ -5,14 +5,13 @@ import {
   Route,
   Redirect,
   RouteChildrenProps,
-  // Link
 } from "react-router-dom";
-import routes, { DemoRoute } from "../routes/router";
+import ROUTES, { DemoRoute } from "../routes/router";
 
-const getRoutes = (routes: Array<DemoRoute>) => {
-  return routes.map((route, key) => {
+const AppRoutes = (props: { routes: Array<DemoRoute> }) => {
+  const { routes } = props;
+  const routeTemplates = routes.map((route: DemoRoute, key) => {
     return (
-      // exact
       <Route
         path={route.path}
         key={key}
@@ -23,22 +22,27 @@ const getRoutes = (routes: Array<DemoRoute>) => {
       ></Route>
     );
   });
+  return <React.Fragment>{routeTemplates}</React.Fragment>;
 };
 
-function App() {
+const App = () => {
+  const META = {
+    CONTAINER_CLASSNAME: "App",
+    DEFAULT_ROUTE: "/",
+    REDIRECT_ROUTE: "/dashboard/home",
+  };
   return (
-    <div className="App">
+    <div className={META.CONTAINER_CLASSNAME}>
       <Router>
         <Switch>
-          <Route exact path="/">
-            <Redirect to="/dashboard/home" />
+          <Route exact path={META.DEFAULT_ROUTE}>
+            <Redirect to={META.REDIRECT_ROUTE} />
           </Route>
-          {getRoutes(routes)}
+          <AppRoutes routes={ROUTES} />
         </Switch>
       </Router>
-      {/* <Dashboard /> */}
     </div>
   );
-}
+};
 
 export default App;
