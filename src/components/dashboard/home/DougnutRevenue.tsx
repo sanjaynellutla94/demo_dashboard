@@ -1,9 +1,8 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { DemoCircleProgress, DemoUpDown } from "../../common/demo-components";
 
-const VALUE = 0.6;
 const MAX_VALUE = 1;
-const LABEL = `$${VALUE * 100}`;
 const STYLES = {
   path: {
     stroke: `#8a65c5`,
@@ -16,14 +15,34 @@ const STYLES = {
 const CONTAINER_CLASS = "px-30";
 
 export default function DougnutRevenue() {
+  let state = {
+    stats: "",
+    revenue: "",
+    upDown: {
+      up: "",
+      down: "",
+    },
+  };
+  state = useSelector((store: any) => {
+    const { dougnutStats } = store.dashboard.home.home.data;
+    if (dougnutStats) {
+      const { stats, revenue, upDown } = dougnutStats;
+      return {
+        stats,
+        revenue,
+        upDown,
+      };
+    }
+    return state;
+  });
   return (
     <div className={CONTAINER_CLASS}>
       <div>
         <DemoCircleProgress
           styles={STYLES}
-          value={VALUE}
+          value={state.stats}
           maxValue={MAX_VALUE}
-          text={LABEL}
+          text={state.revenue}
         ></DemoCircleProgress>
       </div>
       <div>

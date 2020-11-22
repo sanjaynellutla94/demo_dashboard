@@ -1,13 +1,7 @@
 import React, { useState } from "react";
 import { Card, Tabs, Tab, Image } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { DemoIcon, DemoSearchbar } from "../../common/demo-components";
-
-const users = [
-  { id: 1, userName: "User 1", about: "About" },
-  { id: 2, userName: "User 2", about: "About" },
-  { id: 3, userName: "User 3", about: "About" },
-  { id: 4, userName: "User 4", about: "About" },
-];
 
 const MenuItem = (props: {
   title?: string;
@@ -54,6 +48,15 @@ const UserItem = (props: any) => {
 
 export default function Networking() {
   const [key, setKey] = useState("home");
+  let state = {
+    people: [],
+  };
+  state = useSelector((store: any) => {
+    const { people } = store.dashboard.home.home.data;
+    return {
+      people: people || [],
+    };
+  });
   return (
     <div>
       <Tabs
@@ -69,7 +72,7 @@ export default function Networking() {
           tabClassName="p-0 m-0"
           title={<MenuItem icon="users"></MenuItem>}
         >
-          {users.map((item: any) => {
+          {state.people.map((item: any) => {
             return (
               <UserItem
                 key={item.id}

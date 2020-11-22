@@ -9,6 +9,11 @@ import {
   LINE_GRAPH_DATA,
   REVENUE_PROGRESS,
   SHIPMENTS_DATA,
+  DOUGNUT_PROGRESS,
+  CUSTOMER_FEED,
+  TODAY_TASKS,
+  NETWORKING_PEOPLE,
+  FEATURED_COMPANIES,
 } from "../mock-data/mock-data";
 
 const fakeAsync = (resolve: any, payload: any) => {
@@ -32,8 +37,12 @@ export const getHomeDataFact = () => {
     fakeAsync(resolve, {
       permissions: HOME_PERMISSIONS,
       briefStats: BRIEF_STATS,
+      dougnutStats: DOUGNUT_PROGRESS,
       shipments: SHIPMENTS_DATA,
       revenueProgress: REVENUE_PROGRESS,
+      todaysTasks: TODAY_TASKS,
+      people: NETWORKING_PEOPLE,
+      companies: FEATURED_COMPANIES,
     });
   });
 };
@@ -44,51 +53,9 @@ export const getLinegraphDataFact = () => {
   });
 };
 
-export const getBriefStatsFact = () => {
-  return new Promise((resolve) => {
-    fakeAsync(resolve, BRIEF_STATS);
-  });
-};
-
-export const getLineGraphStatsFact = () => {
-  return new Promise((resolve) => {
-    fakeAsync(resolve, []);
-  });
-};
-
-export const getDougnutStatsFact = () => {
-  return new Promise((resolve) => {
-    fakeAsync(resolve, []);
-  });
-};
-
-export const getMapsStatsFact = () => {
-  return new Promise((resolve) => {
-    fakeAsync(resolve, []);
-  });
-};
-
-export const getBarStatsFact = () => {
-  return new Promise((resolve) => {
-    fakeAsync(resolve, []);
-  });
-};
-
 export const getCustomerFeedsFact = () => {
   return new Promise((resolve) => {
-    fakeAsync(resolve, []);
-  });
-};
-
-export const getTodaysTasksFact = () => {
-  return new Promise((resolve) => {
-    fakeAsync(resolve, []);
-  });
-};
-
-export const getFeaturedComponiesFact = () => {
-  return new Promise((resolve) => {
-    fakeAsync(resolve, []);
+    fakeAsync(resolve, CUSTOMER_FEED);
   });
 };
 

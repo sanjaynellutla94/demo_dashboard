@@ -1,7 +1,12 @@
 import React from "react";
+import { DemoIcon } from "../demo-components";
 
 const FbLoader = (props: any) => {
-  return <div>Loading .....</div>;
+  return (
+    <div>
+      <DemoIcon icon="spinner" spin></DemoIcon> Loading .....
+    </div>
+  );
 };
 
 FbLoader.defaultProps = {};

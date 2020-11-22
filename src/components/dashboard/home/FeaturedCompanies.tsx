@@ -1,18 +1,7 @@
 import React from "react";
 import { Button } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { DemoIcon } from "../../common/demo-components";
-
-const companies = [
-  { id: 1, containerClass: "bg-secondary text-light m-2", icon: "amazon" },
-  { id: 2, containerClass: "bg-secondary text-light m-2", icon: "apple" },
-  { id: 3, containerClass: "bg-secondary text-light m-2", icon: "chrome" },
-  { id: 4, containerClass: "bg-secondary text-light m-2", icon: "amazon" },
-  { id: 5, containerClass: "bg-secondary text-light m-2", icon: "apple" },
-  // { id: 6, containerClass: 'bg-warning text-success m-2', icon: 'chrome' },
-  // { id: 7, containerClass: 'bg-primary text-info m-2', icon: 'amazon' },
-  // { id: 8, containerClass: 'bg-dark text-light m-2', icon: 'apple' },
-  // { id: 9, containerClass: 'bg-warning text-success m-2', icon: 'chrome' },
-];
 
 const CompanyItem = (props: any) => {
   const { icon, containerClass } = props;
@@ -26,9 +15,18 @@ const CompanyItem = (props: any) => {
 };
 
 export default function FeaturedCompanies() {
+  let state = {
+    companies: [],
+  };
+  state = useSelector((store: any) => {
+    const { companies } = store.dashboard.home.home.data;
+    return {
+      companies: companies || [],
+    };
+  });
   return (
     <div className="p-2">
-      {companies.map((item: any) => {
+      {state.companies.map((item: any) => {
         return (
           <CompanyItem
             key={item.id}

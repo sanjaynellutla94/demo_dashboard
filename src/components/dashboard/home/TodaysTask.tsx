@@ -1,64 +1,46 @@
 import React from "react";
 import { Table, Form } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
-const data = [
-  {
-    id: 1,
-    title: "Arrange",
-    description: "this is description",
-    time: "12:20 AM",
-    isDone: true,
-  },
-  {
-    id: 2,
-    title: "Shipment",
-    description: "this is description",
-    time: "12:30 AM",
-    isDone: false,
-  },
-  {
-    id: 3,
-    title: "MakeList",
-    description: "this is description",
-    time: "12:40 AM",
-    isDone: false,
-  },
-  {
-    id: 4,
-    title: "Review",
-    description: "this is description",
-    time: "12:50 AM",
-    isDone: false,
-  },
-];
+export interface TaskType {
+  id: number;
+  title: string;
+  description: string;
+  time: string;
+  isDone: boolean;
+}
+
+export interface TasksType {
+  tasks: Array<TaskType>;
+}
 
 export default function TodaysTask() {
+  let state: TasksType = {
+    tasks: [],
+  };
+  state = useSelector((store: any) => {
+    const { todaysTasks } = store.dashboard.home.home.data;
+    return {
+      tasks: todaysTasks || [],
+    };
+  });
   return (
     <div>
       <Table responsive>
-        {/* <thead>
-          <tr>
-            <th>#</th>
-            <th>Table heading</th>
-            <th>Table heading</th>
-            <th>Table heading</th>
-            <th>Table heading</th>
-            <th>Table heading</th>
-            <th>Table heading</th>
-          </tr>
-        </thead> */}
         <tbody>
-          {data.map((item) => {
+          {state.tasks.map((item: TaskType) => {
+            const type = "radio";
+            const id = `radio-${item.id}`;
+            const key = `tr-${item.id}`;
             return (
-              <tr key={item.id}>
+              <tr key={key}>
                 <td>
-                  {" "}
                   <Form.Check
                     custom
                     onChange={() => {}}
                     checked={item.isDone}
-                    type={"radio"}
-                    id={`radio-${item.id}`}
+                    type={type}
+                    id={id}
                   />
                 </td>
                 <td>{item.title}</td>

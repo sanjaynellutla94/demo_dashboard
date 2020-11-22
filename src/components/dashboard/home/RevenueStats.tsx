@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Card } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { DemoIcon, DemoUpDown } from "../../common/demo-components";
+import "../../../styles/dashboard/RevenueStats.scss";
 
 const RevenueItem = (props: {
   title?: string;
@@ -13,14 +14,7 @@ const RevenueItem = (props: {
 }) => {
   const { title, revenue, upDown } = props;
   return (
-    <Card
-      className="py-20"
-      style={{
-        minWidth: "200px",
-        maxWidth: "200px",
-        border: "none",
-      }}
-    >
+    <Card bsPrefix="card py-20 Revenue-Item">
       <Card.Title className="fs-14 text-muted section-header">
         {title}
       </Card.Title>
@@ -39,11 +33,6 @@ const RevenueItem = (props: {
 export default function RevenueStats() {
   let state = {
     stats: [],
-    // revenue: '',
-    // upDown: {
-    //   up: '',
-    //   down: '',
-    // },
   };
   state = useSelector((store: any) => {
     const { briefStats } = store.dashboard.home.home.data;
@@ -56,22 +45,14 @@ export default function RevenueStats() {
     return state;
   });
   return (
-    <div
-      className="d-flex bg-white px-30"
-      style={{
-        overflowX: "auto",
-      }}
-    >
+    <div className="d-flex bg-white px-30 h-scroll">
       {state.stats.map((item: any) => {
         return (
           <RevenueItem
             key={item.key}
             title={item.title}
             revenue={item.revenue}
-            upDown={{
-              up: item.up.count,
-              down: item.down.count,
-            }}
+            upDown={item.upDown}
           ></RevenueItem>
         );
       })}

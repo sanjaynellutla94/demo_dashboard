@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
 import { Alert, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { DemoLineGraph, DemoLoader } from "../../common/demo-components";
+import {
+  DemoIcon,
+  DemoLineGraph,
+  DemoLoader,
+} from "../../common/demo-components";
 import { setLinegraphDataAction } from "../../../store/actions/dashboard/home/actions-dashboard-home";
 
 export default function LineGraphRevenue() {
@@ -31,7 +35,7 @@ export default function LineGraphRevenue() {
             Year
           </Button>
           <Button variant="link" className="text-muted" size="sm">
-            <i className="fa fa-ellipsis-v"></i>
+            <DemoIcon icon="ellipsis-v"></DemoIcon>
           </Button>
         </div>
         <DemoLineGraph data={state.data} width="100%" height={250} />

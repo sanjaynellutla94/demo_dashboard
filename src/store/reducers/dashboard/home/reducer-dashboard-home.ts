@@ -12,6 +12,11 @@ const initialState = {
     errorMsg: "",
     data: [],
   },
+  customerFeeds: {
+    isLoading: false,
+    errorMsg: "",
+    data: [],
+  },
 };
 
 const homeReducer = (
@@ -67,6 +72,32 @@ const homeReducer = (
         ...state,
         lineGraph: {
           ...state.lineGraph,
+          isLoading: false,
+          errorMsg: action.payload,
+        },
+      };
+    case TYPES.CUSTOMER_FEED_FETCH:
+      return {
+        ...state,
+        customerFeeds: {
+          ...state.customerFeeds,
+          isLoading: true,
+        },
+      };
+    case TYPES.CUSTOMER_FEED_FETCH_SUCCESS:
+      return {
+        ...state,
+        customerFeeds: {
+          ...state.customerFeeds,
+          isLoading: false,
+          data: action.payload,
+        },
+      };
+    case TYPES.CUSTOMER_FEED_FETCH_FAILURE:
+      return {
+        ...state,
+        customerFeeds: {
+          ...state.customerFeeds,
           isLoading: false,
           errorMsg: action.payload,
         },
